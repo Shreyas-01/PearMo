@@ -9,6 +9,8 @@ const Creator = require('../Models/CreatorSchema');
 const Sponser = require('../Models/SponserSchema');
 
 Router.post('/', (req, res, next) => {
+    let createdUser;
+    let createdCategory;
     User.find({ email: req.body.email}).exec()
         .then(user => {
             if(user.length >= 1) {
@@ -42,8 +44,10 @@ Router.post('/', (req, res, next) => {
                             });
                             newUser.save()
                                 .then(result => {
-                                    console.log('User Created!');
-                                    res.status(201).json({response: result});
+                                    // console.log('User Created!');
+                                    // res.status(201).json({response: result});
+                                    createdUser = result;
+                                    // console.log(createdUser);
                                 })
                                 .catch(err => {
                                     console.log('User creation failed');
@@ -62,8 +66,13 @@ Router.post('/', (req, res, next) => {
                             });
                             newCreator.save()
                                 .then(result => {
-                                    console.log('Creator Created!');
-                                    res.status(201).json({response: result});
+                                    // console.log('Creator Created!');
+                                    // res.status(201).json({response: result});
+                                    createdCategory = result;
+                                    res.status(200).json({
+                                        createdUser,
+                                        createdCategory
+                                    });
                                 })
                                 .catch(err => {
                                     console.log('Creator creation failed');
@@ -93,8 +102,9 @@ Router.post('/', (req, res, next) => {
                             });
                             newUser.save()
                                 .then(result => {
-                                    console.log('User Created!');
-                                    res.status(201).json({response: result});
+                                    // console.log('User Created!');
+                                    // res.status(201).json({response: result});
+                                    createdUser = result;
                                 })
                                 .catch(err => {
                                     console.log('User creation failed');
@@ -113,14 +123,20 @@ Router.post('/', (req, res, next) => {
                                 }
                             });
                             newSponser.save()
-                            .then(result => {
-                                console.log('Sponser Created!');
-                                res.status(201).json({response: result});
-                            })
-                            .catch(err => {
-                                console.log('Sponser creation failed');
-                                res.status(500).json({ error: err.message});
-                            });
+                                .then(result => {
+                                    // console.log('Sponser Created!');
+                                    // res.status(201).json({response: result});
+                                    createdCategory = result;
+                                    res.status(200).json({
+                                        createdUser,
+                                        createdCategory
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('Sponser creation failed');
+                                    res.status(500).json({ error: err.message});
+                                });
+                            
                         }
                     });
 
@@ -145,8 +161,9 @@ Router.post('/', (req, res, next) => {
                             });
                             newUser.save()
                                 .then(result => {
-                                    console.log('User Created!');
-                                    res.status(201).json({response: result});
+                                    // console.log('User Created!');
+                                    // res.status(201).json({response: result});
+                                    createdUser = result;
                                 })
                                 .catch(err => {
                                     console.log('User creation failed');
@@ -161,13 +178,19 @@ Router.post('/', (req, res, next) => {
                             });
                             newFan.save()
                                 .then(result => {
-                                    console.log('Fan Created!');
-                                    res.status(201).json({response: result});
+                                    // console.log('Fan Created!');
+                                    // res.status(201).json({response: result});
+                                    createdCategory = result;
+                                    res.status(200).json({
+                                        createdUser,
+                                        createdCategory
+                                    });
                                 })
                                 .catch(err => {
                                     console.log('Fan creation failed');
                                     res.status(500).json({ error: err.message});
                                 });
+                            
                         }
                     });
 
