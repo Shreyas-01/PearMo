@@ -42,17 +42,6 @@ Router.post('/', (req, res, next) => {
                                 },
                                 password: hash
                             });
-                            newUser.save()
-                                .then(result => {
-                                    // console.log('User Created!');
-                                    // res.status(201).json({response: result});
-                                    createdUser = result;
-                                    // console.log(createdUser);
-                                })
-                                .catch(err => {
-                                    console.log('User creation failed');
-                                    res.status(500).json({ error: err.message});
-                                });
                             const newCreator = new Creator({
                                 creatorId: newCreatorId,
                                 userId: newUserId,
@@ -64,20 +53,26 @@ Router.post('/', (req, res, next) => {
                                     socials: req.body.bio.socials
                                 }
                             });
-                            newCreator.save()
-                                .then(result => {
-                                    // console.log('Creator Created!');
-                                    // res.status(201).json({response: result});
-                                    createdCategory = result;
-                                    res.status(200).json({
-                                        createdUser,
-                                        createdCategory
+
+                            newUser.save()
+                            .then(userresult => {
+                                newCreator.save()
+                                    .then(creatorresult => {
+                                        res.status(200).json({
+                                            userresult,
+                                            creatorresult
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('Creator creation failed');
+                                        res.status(500).json({ error: err.message});
                                     });
-                                })
-                                .catch(err => {
-                                    console.log('Creator creation failed');
-                                    res.status(500).json({ error: err.message});
-                                });
+                            })
+                            .catch(err => {
+                                console.log('User creation failed');
+                                res.status(500).json({ error: err.message});
+                            });
+                            
                         }
                     });
 
@@ -100,17 +95,6 @@ Router.post('/', (req, res, next) => {
                                 },
                                 password: hash
                             });
-                            newUser.save()
-                                .then(result => {
-                                    // console.log('User Created!');
-                                    // res.status(201).json({response: result});
-                                    createdUser = result;
-                                })
-                                .catch(err => {
-                                    console.log('User creation failed');
-                                    res.status(500).json({ error: err.message});
-                                });
-
                             const newSponser = new Sponser({
                                 sponserId: newSponserId,
                                 userId: newUserId,
@@ -122,21 +106,25 @@ Router.post('/', (req, res, next) => {
                                     socials: req.body.bio.socials
                                 }
                             });
-                            newSponser.save()
-                                .then(result => {
-                                    // console.log('Sponser Created!');
-                                    // res.status(201).json({response: result});
-                                    createdCategory = result;
-                                    res.status(200).json({
-                                        createdUser,
-                                        createdCategory
+
+                            newUser.save()
+                            .then(userresult => {
+                                newSponser.save()
+                                    .then(sponsorresult => {
+                                        res.status(200).json({
+                                            userresult,
+                                            sponsorresult
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('Sponser creation failed');
+                                        res.status(500).json({ error: err.message});
                                     });
-                                })
-                                .catch(err => {
-                                    console.log('Sponser creation failed');
-                                    res.status(500).json({ error: err.message});
-                                });
-                            
+                            })
+                            .catch(err => {
+                                console.log('User creation failed');
+                                res.status(500).json({ error: err.message});
+                            });
                         }
                     });
 
@@ -159,38 +147,31 @@ Router.post('/', (req, res, next) => {
                                 },
                                 password: hashpwd
                             });
-                            newUser.save()
-                                .then(result => {
-                                    // console.log('User Created!');
-                                    // res.status(201).json({response: result});
-                                    createdUser = result;
-                                })
-                                .catch(err => {
-                                    console.log('User creation failed');
-                                    res.status(500).json({ error: err.message});
-                                });
-
                             const newFan = new Fan({
                                 fanId: newFanId,
                                 userId: newUserId,
                                 username: req.body.username,
                                 image: null
                             });
-                            newFan.save()
-                                .then(result => {
-                                    // console.log('Fan Created!');
-                                    // res.status(201).json({response: result});
-                                    createdCategory = result;
+
+                            newUser.save()
+                            .then(userresult => {
+                                newFan.save()
+                                .then(fanresult => {
                                     res.status(200).json({
-                                        createdUser,
-                                        createdCategory
+                                        userresult,
+                                        fanresult
                                     });
                                 })
                                 .catch(err => {
                                     console.log('Fan creation failed');
                                     res.status(500).json({ error: err.message});
                                 });
-                            
+                            })
+                            .catch(err => {
+                                console.log('User creation failed');
+                                res.status(500).json({ error: err.message});
+                            });
                         }
                     });
 
