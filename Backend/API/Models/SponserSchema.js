@@ -7,7 +7,7 @@ const FollowingSchema = mongoose.Schema({
 
 const FollowerSchema = mongoose.Schema({
     category: { type: String, required: true},
-    followerId: { type: mongoose.Schema.Types.ObjectId, refPath: 'catergory', required: true}
+    followerId: { type: mongoose.Schema.Types.ObjectId, refPath: 'category', required: true}
 });
 
 const SocialSchema = mongoose.Schema({

@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const FollowingSchema = mongoose.Schema({
     category: { type: String, required: true},
-    followerId: { type: mongoose.Schema.Types.ObjectId, refPath: 'catergory', required: true}
+    followerId: { type: mongoose.Schema.Types.ObjectId, refPath: 'category', required: true}
 });
 
 const FollowerSchema = mongoose.Schema({
     category: { type: String, required: true},
-    followerId: { type: mongoose.Schema.Types.ObjectId, refPath: 'catergory', required: true}
+    followerId: { type: mongoose.Schema.Types.ObjectId, refPath: 'category', required: true}
 });
 
 const SocialSchema = mongoose.Schema({
