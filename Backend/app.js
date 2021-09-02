@@ -10,6 +10,7 @@ dotenv.config();
 // Import Routes
 const defaultRoute = require('./API/Routes/DefaultRoute');
 const signUpRoute = require('./API/Routes/SignUpRoute');
+const logInRoute = require('./API/Routes/LoginRoute');
 
 mongoose.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@cluster0.tpxdq.mongodb.net/${process.env.MONGO_DATABASE_NAME}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
@@ -48,6 +49,7 @@ app.use((req, res, next) => {
 // Routes for request handling
 app.use('/', defaultRoute);
 app.use('/signup', signUpRoute);
+app.use('/login',logInRoute);
 
 // Error handling
 app.use((req, res, next) => {
