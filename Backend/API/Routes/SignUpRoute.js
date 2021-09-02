@@ -9,8 +9,6 @@ const Creator = require('../Models/CreatorSchema');
 const Sponser = require('../Models/SponserSchema');
 
 Router.post('/', (req, res, next) => {
-    let createdUser;
-    let createdCategory;
     User.find({ email: req.body.email}).exec()
         .then(user => {
             if(user.length >= 1) {
