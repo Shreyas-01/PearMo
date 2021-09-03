@@ -15,13 +15,13 @@ const SocialSchema = mongoose.Schema({
     link: { type: String}
 });
 
-const SponserSchema = mongoose.Schema({
-    sponserId: { type: mongoose.Schema.Types.ObjectId, required: true},
+const SponsorSchema = mongoose.Schema({
+    sponsorId: { type: mongoose.Schema.Types.ObjectId, required: true},
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     username: { type: String, required: true},
     image: { type: String, required: false},
     bio: {
-        sponserIn: { type: String, required: true},
+        sponsorIn: { type: String, required: true},
         companyURL: { type: String, required: true},
         socials: [SocialSchema]
     },
@@ -32,4 +32,4 @@ const SponserSchema = mongoose.Schema({
     followers: [FollowerSchema]
 });
 
-module.exports = mongoose.model('Sponser', SponserSchema);
+module.exports = mongoose.model('Sponsor', SponsorSchema);

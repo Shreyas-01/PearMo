@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 const User = require('../Models/UserSchema');
 const Fan = require('../Models/FanSchema');
 const Creator = require('../Models/CreatorSchema');
-const Sponser = require('../Models/SponserSchema');
+const Sponsor = require('../Models/SponsorSchema');
 
 Router.post('/', (req, res, next) => {
     User.find({ email: req.body.email}).exec()
@@ -18,6 +18,8 @@ Router.post('/', (req, res, next) => {
             } else {
                 const newUserId = new mongoose.Types.ObjectId();
                 const Salt = 10;
+
+                //CREATOR SIGNUP
                 if(req.body.registerAs.category === 'Creator') {
                     const newCreatorId = new mongoose.Types.ObjectId();
                     bcrypt.hash(req.body.password, Salt, (err, hash) => {
@@ -74,8 +76,9 @@ Router.post('/', (req, res, next) => {
                         }
                     });
 
-                } else if(req.body.registerAs.category === 'Sponser') {
-                    const newSponserId = new mongoose.Types.ObjectId();
+                //SPONSOR SIGNUP
+                } else if(req.body.registerAs.category === 'Sponsor') {
+                    const newSponsorId = new mongoose.Types.ObjectId();
                     bcrypt.hash(req.body.password, Salt, (err, hash) => {
                         if(err) {
                             return res.status(500).json({ error: err})
@@ -89,25 +92,25 @@ Router.post('/', (req, res, next) => {
                                 dob: req.body.dob,
                                 registerAs: { 
                                     category: req.body.registerAs.category,
-                                    categoryId: newSponserId
+                                    categoryId: newSponsorId
                                 },
                                 password: hash
                             });
-                            const newSponser = new Sponser({
-                                sponserId: newSponserId,
+                            const newSponsor = new Sponsor({
+                                sponsorId: newSponsorId,
                                 userId: newUserId,
                                 username: req.body.username,
                                 image: null,
                                 bio: {
-                                    createIn: req.body.bio.createIn,
-                                    channelURL: req.body.bio.channelURL,
+                                    sponsorIn: req.body.bio.sponsorIn,
+                                    companyURL: req.body.bio.companyURL,
                                     socials: req.body.bio.socials
                                 }
                             });
 
                             newUser.save()
                             .then(userresult => {
-                                newSponser.save()
+                                newSponsor.save()
                                     .then(sponsorresult => {
                                         res.status(200).json({
                                             userresult,
@@ -115,7 +118,7 @@ Router.post('/', (req, res, next) => {
                                         });
                                     })
                                     .catch(err => {
-                                        console.log('Sponser creation failed');
+                                        console.log('Sponsor creation failed');
                                         res.status(500).json({ error: err.message});
                                     });
                             })
@@ -126,6 +129,7 @@ Router.post('/', (req, res, next) => {
                         }
                     });
 
+                //FAN SIGNUP
                 } else {
                     const newFanId = new mongoose.Types.ObjectId();
                     bcrypt.hash(req.body.password, Salt, (err, hash) => {
@@ -143,7 +147,7 @@ Router.post('/', (req, res, next) => {
                                     category: req.body.registerAs.category,
                                     categoryId: newFanId
                                 },
-                                password: hashpwd
+                                password: hash
                             });
                             const newFan = new Fan({
                                 fanId: newFanId,

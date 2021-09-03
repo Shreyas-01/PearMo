@@ -25,12 +25,11 @@ Router.post('/', (req, res ,next) => {
                     });
                 }
                 else{
-                    const jwttoken= 'fwpgmcgsit';
                     const age = 1000 * 60 * 60 * 4; // 4 hours
-                    const token = jwt.sign({email}, jwttoken, { expiresIn: age });
+                    const token = jwt.sign({email}, process.env.JWTTOKEN, { expiresIn: age });
                     res.cookie('jwt', token, { httpOnly: true, maxAge: age });
                     console.log("Login successful.")
-                    res.status(200).json();
+                    res.status(200).json({message: 'Login successful'});
                 }
             })
             .catch(error => {
