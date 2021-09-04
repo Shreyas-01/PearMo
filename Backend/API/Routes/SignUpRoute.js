@@ -35,6 +35,7 @@ Router.post('/', (req, res, next) => {
                                 middleName: req.body.middleName,
                                 lastName: req.body.lastName,
                                 email: req.body.email,
+                                username: req.body.username,
                                 dob: req.body.dob,
                                 registerAs: { 
                                     category: req.body.registerAs.category,
@@ -45,7 +46,7 @@ Router.post('/', (req, res, next) => {
                             const newCreator = new Creator({
                                 creatorId: newCreatorId,
                                 userId: newUserId,
-                                username: req.body.username,
+                                
                                 image: null,
                                 bio: {
                                     createIn: req.body.bio.createIn,
@@ -89,6 +90,7 @@ Router.post('/', (req, res, next) => {
                                 middleName: req.body.middleName,
                                 lastName: req.body.lastName,
                                 email: req.body.email,
+                                username: req.body.username,
                                 dob: req.body.dob,
                                 registerAs: { 
                                     category: req.body.registerAs.category,
@@ -99,7 +101,6 @@ Router.post('/', (req, res, next) => {
                             const newSponsor = new Sponsor({
                                 sponsorId: newSponsorId,
                                 userId: newUserId,
-                                username: req.body.username,
                                 image: null,
                                 bio: {
                                     sponsorIn: req.body.bio.sponsorIn,
@@ -142,6 +143,7 @@ Router.post('/', (req, res, next) => {
                                 middleName: req.body.middleName,
                                 lastName: req.body.lastName,
                                 email: req.body.email,
+                                username: req.body.username,
                                 dob: req.body.dob,
                                 registerAs: { 
                                     category: req.body.registerAs.category,
@@ -152,7 +154,6 @@ Router.post('/', (req, res, next) => {
                             const newFan = new Fan({
                                 fanId: newFanId,
                                 userId: newUserId,
-                                username: req.body.username,
                                 image: null
                             });
 

@@ -18,7 +18,6 @@ const SocialSchema = mongoose.Schema({
 const CreatorSchema = mongoose.Schema({
     creatorId: { type: mongoose.Schema.Types.ObjectId, required: true},
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    username: { type: String, required: true},
     image: { type: String, required: false},
     bio: {
         createIn: { type: String, required: true},

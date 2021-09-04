@@ -16,6 +16,7 @@ const PostSchema = mongoose.Schema({
     date: { type: Date, default: Date.now},
     title: { type: String, required: true},
     description: { type: String, required: false},
+    text: {type:String, required: true},
     image: { type: String, required: false},
     accountData: {
         accountCategory: { type: String},
