@@ -25,6 +25,7 @@ const PostSchema = mongoose.Schema({
         accountName: { type: String}
     },
     likes: [LikeSchema],
+    numberOfLikes: { type: Number, default: 0},
     comments: [CommentSchema],
     share: { type: String}
 });

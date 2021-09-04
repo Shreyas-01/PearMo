@@ -9,6 +9,7 @@ const FollowingSchema = mongoose.Schema({
 const FanSchema = mongoose.Schema({
     fanId: { type: mongoose.Schema.Types.ObjectId, required: true},
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    username: { type: String, required: true},
     image: { type: String, required: false},
     following: [FollowingSchema]
 });

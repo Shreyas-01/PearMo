@@ -13,23 +13,24 @@ Router.post('/', (req, res, next) => {
         text: req.body.text,
         image: req.body.image,
         accountData: {
-            accountCategory: req.body.category,
-            accountImage: req.body.image,
-            accountId: req.body.userId,
-            accountName: req.body.username
+            accountCategory: req.body.accountData.accountCategory,
+            accountImage: req.body.accountData.accountImage,
+            accountId: req.body.accountData.accountId,
+            accountName: req.body.accountData.accountName
         }
     });
+
     newPost.save()
-    .then(postresult => {
-        console.log('post created successfully')
-        res.status(200).json({
-            postresult
+        .then(postresult => {
+            console.log('post created successfully');
+            res.status(200).json({
+                postresult
+            });
         })
-    })
-    .catch(err => {
-        console.log('Post creation failed');
-        res.status(500).json({ error: err.message});
-    });
+        .catch(err => {
+            console.log('Post creation failed');
+            res.status(500).json({ error: err.message});
+        });
 });
 
 module.exports = Router;

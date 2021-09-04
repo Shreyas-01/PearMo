@@ -46,7 +46,7 @@ Router.post('/', (req, res, next) => {
                             const newCreator = new Creator({
                                 creatorId: newCreatorId,
                                 userId: newUserId,
-                                
+                                username: req.body.username,
                                 image: null,
                                 bio: {
                                     createIn: req.body.bio.createIn,
@@ -101,6 +101,7 @@ Router.post('/', (req, res, next) => {
                             const newSponsor = new Sponsor({
                                 sponsorId: newSponsorId,
                                 userId: newUserId,
+                                username: req.body.username,
                                 image: null,
                                 bio: {
                                     sponsorIn: req.body.bio.sponsorIn,
@@ -154,22 +155,23 @@ Router.post('/', (req, res, next) => {
                             const newFan = new Fan({
                                 fanId: newFanId,
                                 userId: newUserId,
+                                username: req.body.username,
                                 image: null
                             });
 
                             newUser.save()
-                            .then(userresult => {
-                                newFan.save()
-                                .then(fanresult => {
-                                    res.status(200).json({
-                                        userresult,
-                                        fanresult
-                                    });
-                                })
-                                .catch(err => {
-                                    console.log('Fan creation failed');
-                                    res.status(500).json({ error: err.message});
-                                });
+                                .then(userresult => {
+                                    newFan.save()
+                                        .then(fanresult => {
+                                            res.status(200).json({
+                                                userresult,
+                                                fanresult
+                                            });
+                                        })
+                                        .catch(err => {
+                                            console.log('Fan creation failed');
+                                            res.status(500).json({ error: err.message});
+                                        });
                             })
                             .catch(err => {
                                 console.log('User creation failed');
