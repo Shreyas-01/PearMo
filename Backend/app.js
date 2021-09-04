@@ -14,11 +14,13 @@ const signUpRoute = require('./API/Routes/SignUpRoute');
 const loginRoute = require('./API/Routes/LoginRoute');
 const creatorRoute = require('./API/Routes/CreatorsRoute');
 const sponsorRoute = require('./API/Routes/SponsorsRoute');
-const FeedRoute = require('./API/Routes/FeedRoute');
-const PostRoute = require('./API/Routes/PostRoute');
+const feedRoute = require('./API/Routes/FeedRoute');
+const postRoute = require('./API/Routes/PostRoute');
+
+// Middleware Import
 const requireAuth = require('./API/Middlewares/AuthenticationMiddleware');
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@cluster0.wyhga.mongodb.net/${process.env.MONGO_DATABASE_NAME}?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@cluster0.tpxdq.mongodb.net/${process.env.MONGO_DATABASE_NAME}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).catch(err => {
@@ -55,12 +57,12 @@ app.use((req, res, next) => {
 
 // Routes for request handling
 app.use('/', defaultRoute);
-app.use('/signup', signUpRoute);
 app.use('/login', loginRoute);
-app.use('/feed', requireAuth, FeedRoute);
+app.use('/signup', signUpRoute);
+app.use('/feed', requireAuth, feedRoute);
+app.use('/post', requireAuth, postRoute);
 app.use('/creator', requireAuth, creatorRoute);
 app.use('/sponsor', requireAuth, sponsorRoute);
-app.use('/post', requireAuth, PostRoute);
 
 // Error handling
 app.use((req, res, next) => {

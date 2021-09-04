@@ -18,6 +18,7 @@ const SocialSchema = mongoose.Schema({
 const SponsorSchema = mongoose.Schema({
     sponsorId: { type: mongoose.Schema.Types.ObjectId, required: true},
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    username: { type: String, required: true},
     image: { type: String, required: false},
     bio: {
         sponsorIn: { type: String, required: true},
