@@ -1,7 +1,10 @@
+const mongoose = require('mongoose');
 const express = require('express');
 const Router = express.Router();
+
 const Post = require('../Models/PostSchema');
-const mongoose = require('mongoose');
+const Creator = require('../Models/CreatorSchema');
+const Sponsor = require('../Models/SponsorSchema');
 
 Router.post('/', (req, res, next) => {
     const newPostId = new mongoose.Types.ObjectId();
@@ -23,14 +26,61 @@ Router.post('/', (req, res, next) => {
     newPost.save()
         .then(postresult => {
             console.log('post created successfully');
-            res.status(200).json({
-                postresult
-            });
+            if(req.body.accountData.accountCategory === 'Creator') {
+                Creator.findOne({ creatorId: req.body.accountData.accountId})
+                    .then(creator => {
+                        creator.posts.push(newPostId);
+                        creator.save()
+                            .then(result => {
+                                res.status(201).json({
+                                    message: "New Post Created and Added to Account",
+                                    result
+                                });
+                            })
+                            .catch(err => {
+                                res.status(500).json({
+                                    message: "Unable to add to Creator",
+                                    error: err.message
+                                });
+                            });
+                    })
+                    .catch(err => {
+                        res.status(500).json({
+                            message: "Unable to find & add to Creator",
+                            error: err.message
+                        });
+                    });
+            } else if(req.body.accountData.accountCategory === 'Sponsor') {
+                Sponsor.findOne({ sponsorId: req.body.accountData.accountId})
+                    .then(sponsor => {
+                        sponsor.posts.push(newPostId);
+                        sponsor.save()
+                            .then(result => {
+                                res.status(201).json({
+                                    message: "New Post Created and Added to Account",
+                                    result
+                                });
+                            })
+                            .catch(err => {
+                                res.status(500).json({
+                                    message: "Unable to find & add to Sponsor",
+                                    error: err.message
+                                });
+                            });
+                    })
+                    .catch(err => {
+                        res.status(500).json({
+                            message: "Unable to add to Sponsor",
+                            error: err.message
+                        });
+                    });
+            }
         })
         .catch(err => {
             console.log('Post creation failed');
             res.status(500).json({ error: err.message});
         });
+
 });
 
 module.exports = Router;
