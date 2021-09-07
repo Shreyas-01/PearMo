@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const Router = express.Router();
 
-const upload = require('../Middlewares/Upload');
+// const upload = require('../Middlewares/Upload');
 const Post = require('../Models/PostSchema');
 const Creator = require('../Models/CreatorSchema');
 const Sponsor = require('../Models/SponsorSchema');
