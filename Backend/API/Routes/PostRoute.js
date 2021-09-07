@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 const express = require('express');
 const Router = express.Router();
 
+const upload = require('../Middlewares/Upload');
 const Post = require('../Models/PostSchema');
 const Creator = require('../Models/CreatorSchema');
 const Sponsor = require('../Models/SponsorSchema');
 
-Router.post('/', (req, res, next) => {
+Router.post('/', (req, res, next) => {  // middleware as upload.single('image')
     const newPostId = new mongoose.Types.ObjectId();
 
     const newPost = new Post({
@@ -14,7 +15,7 @@ Router.post('/', (req, res, next) => {
         title: req.body.title,
         description: req.body.description,
         text: req.body.text,
-        image: req.body.image,
+        image: req.body.image,  // req.file.location
         accountData: {
             accountCategory: req.body.accountData.accountCategory,
             accountImage: req.body.accountData.accountImage,
