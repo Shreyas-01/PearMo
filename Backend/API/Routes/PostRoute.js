@@ -2,33 +2,33 @@ const mongoose = require('mongoose');
 const express = require('express');
 const Router = express.Router();
 
-// const upload = require('../Middlewares/Upload');
+const uploadingToAWS = require('../Middlewares/Upload');
 const Post = require('../Models/PostSchema');
 const Creator = require('../Models/CreatorSchema');
 const Sponsor = require('../Models/SponsorSchema');
 
-Router.post('/', (req, res, next) => {  // middleware as upload.single('image')
+Router.post('/', uploadingToAWS, (req, res, next) => {  // middleware as upload.single('image')
     const newPostId = new mongoose.Types.ObjectId();
-
+    
     const newPost = new Post({
         postId: newPostId,
         title: req.body.title,
         description: req.body.description,
         text: req.body.text,
-        image: req.body.image,  // req.file.location
+        image: req.file.location,  // req.file.location
         accountData: {
-            accountCategory: req.body.accountData.accountCategory,
-            accountImage: req.body.accountData.accountImage,
-            accountId: req.body.accountData.accountId,
-            accountName: req.body.accountData.accountName
+            accountCategory: req.body.accountCategory,
+            accountImage: req.body.accountImage,
+            accountId: req.body.accountId,
+            accountName: req.body.accountName
         }
     });
 
     newPost.save()
         .then(postresult => {
             console.log('post created successfully');
-            if(req.body.accountData.accountCategory === 'Creator') {
-                Creator.findOne({ creatorId: req.body.accountData.accountId})
+            if(req.body.accountCategory === 'Creator') {
+                Creator.findOne({ creatorId: req.body.accountId})
                     .then(creator => {
                         creator.posts.push(newPostId);
                         creator.save()
@@ -51,8 +51,8 @@ Router.post('/', (req, res, next) => {  // middleware as upload.single('image')
                             error: err.message
                         });
                     });
-            } else if(req.body.accountData.accountCategory === 'Sponsor') {
-                Sponsor.findOne({ sponsorId: req.body.accountData.accountId})
+            } else if(req.body.accountCategory === 'Sponsor') {
+                Sponsor.findOne({ sponsorId: req.body.accountId})
                     .then(sponsor => {
                         sponsor.posts.push(newPostId);
                         sponsor.save()

@@ -26,7 +26,7 @@ const s3 = new aws.S3({
             cb(null, {fieldName: file.fieldname});
         },
         key: function (req, file, cb) {
-            cb(null, `pearMo/image/${Date.now().toString()}`);
+            cb(null, `pearMo-image-${Date.now().toString()}`);
         }  
     });
 
@@ -43,4 +43,19 @@ const upload = multer({
 // for using middleware upload.single('fieldname')
 // after execution of middleware it will have field in req.file.location
 
-module.exports = upload;
+const uploadSingle = upload.single('image');
+
+const uploadingToAWS = (req, res, next) => {
+    uploadSingle(req, res, err => {
+        if(err) {
+            res.status(500).json({
+                success: false,
+                message: err.message
+            });
+        }
+        // console.log("file object: " + req.file);
+        next();
+    });
+}
+
+module.exports = uploadingToAWS;
