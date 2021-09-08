@@ -40,7 +40,8 @@ Router.post('/', (req, res ,next) => {
                                 userId:userexists.userId,
                                 category: userexists.registerAs.category,
                                 categoryId: userexists.registerAs.categoryId,
-                                username: userexists.username
+                                username: userexists.username,
+                                email: userexists.email
                             });  
                         }
                     })

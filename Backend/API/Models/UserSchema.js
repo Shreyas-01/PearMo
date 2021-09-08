@@ -8,6 +8,7 @@ const UserSchema = mongoose.Schema({
     email: { type: String, required: true, unique: true, match:  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/},
     dob: { type: Date, required: true},
     username: { type: String, required: true},
+    image: { type: String, required: false},
     joinDate: { type: Date, default: Date.now},
     registerAs: { 
         category: { type: String, required: true},
