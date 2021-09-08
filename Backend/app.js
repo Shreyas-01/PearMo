@@ -16,6 +16,7 @@ const creatorRoute = require('./API/Routes/CreatorsRoute');
 const sponsorRoute = require('./API/Routes/SponsorsRoute');
 const feedRoute = require('./API/Routes/FeedRoute');
 const postRoute = require('./API/Routes/PostRoute');
+const profileRoute = require('./API/Routes/ProfileRoute');
 
 // Middleware Import
 const requireAuth = require('./API/Middlewares/AuthenticationMiddleware');
@@ -63,6 +64,7 @@ app.use('/feed', requireAuth, feedRoute);
 app.use('/post', requireAuth, postRoute);
 app.use('/creator', requireAuth, creatorRoute);
 app.use('/sponsor', requireAuth, sponsorRoute);
+app.use('/profile', requireAuth, profileRoute);
 
 // Error handling
 app.use((req, res, next) => {
