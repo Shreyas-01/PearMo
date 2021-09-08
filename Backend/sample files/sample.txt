@@ -53,10 +53,8 @@
         "description": "testing description",
         "text": "testing text",
         "image": null,
-        "accountData": {
-            "accountCategory": "Creator",
-            "accountImage": null,
-            "accountId": "61336ee10f15859287ee9aaf",
-            "accountName": "garvit_003"
-        }
+        "accountCategory": "Creator",
+        "accountImage": null,
+        "accountId": "61336ee10f15859287ee9aaf",
+        "accountName": "garvit_003"
 }
