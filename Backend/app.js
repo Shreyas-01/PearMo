@@ -18,6 +18,8 @@ const feedRoute = require('./API/Routes/FeedRoute');
 const postRoute = require('./API/Routes/PostRoute');
 const accountRoute = require('./API/Routes/AccountRoute');
 const profileRoute = require('./API/Routes/ProfileRoute');
+const likeRoute = require('./API/Routes/LikeRoute');
+const commentRoute = require('./API/Routes/CommentRoute');
 
 // Middleware Import
 const requireAuth = require('./API/Middlewares/AuthenticationMiddleware');
@@ -69,6 +71,8 @@ app.use('/creator', requireAuth, creatorRoute);
 app.use('/sponsor', requireAuth, sponsorRoute);
 app.use('/profile', requireAuth, profileRoute);
 app.use('/account', requireAuth, accountRoute);
+app.use('/like', requireAuth, likeRoute);
+app.use('/comment', requireAuth, commentRoute);
 
 // Error handling
 app.use((req, res, next) => {

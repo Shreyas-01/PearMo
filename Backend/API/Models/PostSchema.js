@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const LikeSchema = mongoose.Schema({
-    UserCategory: { type: String},
-    LikeId: { type: mongoose.Schema.Types.ObjectId, refPath: 'UserCategory'} 
+    userCategory: { type: String},
+    likeId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'} 
 });
 
 const CommentSchema = mongoose.Schema({
