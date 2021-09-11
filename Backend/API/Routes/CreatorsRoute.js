@@ -3,15 +3,13 @@ const Router = express.Router();
 
 const Creator = require('../Models/CreatorSchema');
 
-// ensure authentication as well
 Router.get('/', (req, res, next) => {
     Creator.aggregate([
             { 
                 $project:{ 
                     _id: 0,
+                    userId: 1,
                     creatorId: 1,
-                    username: 1,
-                    image: 1,
                     numberOfFollowers: { 
                         $cond: { 
                             if: { $isArray: "$followers" }, 
@@ -30,13 +28,14 @@ Router.get('/', (req, res, next) => {
             }
         ])
         .then(creators => {
-            console.log(creators);
-            res.status(200).json(creators);
+            res.status(200).json(
+                creators
+            );
         })
         .catch(error => {
             console.log(error);
             res.status(500).json({
-                message: "unable to fetch creators",
+                message: "Unable to fetch creators",
                 error: error.message
             });
         });

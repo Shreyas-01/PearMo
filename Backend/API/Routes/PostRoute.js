@@ -2,40 +2,54 @@ const mongoose = require('mongoose');
 const express = require('express');
 const Router = express.Router();
 
-const uploadingToAWS = require('../Middlewares/Upload');
 const Post = require('../Models/PostSchema');
 const Creator = require('../Models/CreatorSchema');
 const Sponsor = require('../Models/SponsorSchema');
 
+const uploadingToAWS = require('../Middlewares/Upload');
+
+Router.get('/:postID', (req, res, next) => {
+    Post.findOne({ postId: req.params.postID})
+        .then(post => {
+            res.status(201).json({
+                response: 'Success',
+                post: post
+            });
+        })
+        .catch(error => {
+            res.status(404).json({
+                response: 'Post Not Found',
+                error: error.message
+            });
+        });
+});
+
 Router.post('/', uploadingToAWS, (req, res, next) => {  // middleware as upload.single('image')
     const newPostId = new mongoose.Types.ObjectId();
     
+    console.log('Returned from Middleware...');
+
     const newPost = new Post({
         postId: newPostId,
         title: req.body.title,
         description: req.body.description,
         text: req.body.text,
         image: req.file.location,  // req.file.location
-        accountData: {
-            accountCategory: req.body.accountCategory,
-            accountImage: req.body.accountImage,
-            accountId: req.body.accountId,
-            accountName: req.body.accountName
-        }
+        userId: req.body.userId
     });
 
     newPost.save()
-        .then(postresult => {
-            console.log('post created successfully');
-            if(req.body.accountCategory === 'Creator') {
-                Creator.findOne({ creatorId: req.body.accountId})
+        .then(post => {
+            console.log('Post Created Successfully: \n' + post);
+            if(req.body.category === 'Creator') {
+                Creator.findOne({ creatorId: req.body.categoryId})
                     .then(creator => {
                         creator.posts.push(newPostId);
                         creator.save()
                             .then(result => {
+                                console.log('Post Creator Result: \n' + result);
                                 res.status(201).json({
                                     message: "New Post Created and Added to Account",
-                                    result
                                 });
                             })
                             .catch(err => {
@@ -51,15 +65,15 @@ Router.post('/', uploadingToAWS, (req, res, next) => {  // middleware as upload.
                             error: err.message
                         });
                     });
-            } else if(req.body.accountCategory === 'Sponsor') {
-                Sponsor.findOne({ sponsorId: req.body.accountId})
+            } else if(req.body.category === 'Sponsor') {
+                Sponsor.findOne({ sponsorId: req.body.categoryId})
                     .then(sponsor => {
                         sponsor.posts.push(newPostId);
                         sponsor.save()
                             .then(result => {
+                                console.log('Post Sponsor Result: \n' + result);
                                 res.status(201).json({
                                     message: "New Post Created and Added to Account",
-                                    result
                                 });
                             })
                             .catch(err => {
@@ -75,11 +89,18 @@ Router.post('/', uploadingToAWS, (req, res, next) => {  // middleware as upload.
                             error: err.message
                         });
                     });
+            } else {
+                res.status(500).json({
+                    response: 'Invalid Category'
+                });
             }
         })
-        .catch(err => {
-            console.log('Post creation failed');
-            res.status(500).json({ error: err.message});
+        .catch(error => {
+            console.log('Post Creation Failed');
+            res.status(500).json({ 
+                response: 'Post Creation Failed',
+                error: error.message
+            });
         });
 
 });

@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const User = require('../Models/UserSchema');
-const Fan = require('../Models/FanSchema');
 const Creator = require('../Models/CreatorSchema');
 const Sponsor = require('../Models/SponsorSchema');
 
@@ -13,21 +12,21 @@ Router.post('/', (req, res, next) => {
         .then(user => {
             if(user.length >= 1) {
                 return res.status(402).json({
-                    message: 'User exist account is already created'
+                    message: 'Account Exists'
                 });
             } else {
                 const newUserId = new mongoose.Types.ObjectId();
-                const Salt = 10;
+                const Salt = parseInt(process.env.SALT);    // need to make environment variable
 
                 //CREATOR SIGNUP
-                if(req.body.registerAs.category === 'Creator') {
+                if(req.body.category === 'Creator') {
                     const newCreatorId = new mongoose.Types.ObjectId();
                     bcrypt.hash(req.body.password, Salt, (err, hash) => {
                         if(err) {
                             res.status(500).json({ 
-                                message: "bcrypt hashing failed",
+                                message: "Hashing Failed",
                                 error: err.message
-                            })
+                            });
                         } else {
                             const newUser = new User({
                                 userId: newUserId,
@@ -38,7 +37,7 @@ Router.post('/', (req, res, next) => {
                                 username: req.body.username,
                                 dob: req.body.dob,
                                 registerAs: { 
-                                    category: req.body.registerAs.category,
+                                    category: req.body.category,
                                     categoryId: newCreatorId
                                 },
                                 password: hash
@@ -46,43 +45,53 @@ Router.post('/', (req, res, next) => {
                             const newCreator = new Creator({
                                 creatorId: newCreatorId,
                                 userId: newUserId,
-                                username: req.body.username,
-                                image: null,
                                 bio: {
-                                    createIn: req.body.bio.createIn,
-                                    channelURL: req.body.bio.channelURL,
-                                    socials: req.body.bio.socials
-                                }
+                                    createIn: req.body.createIn,
+                                    channelURL: req.body.channelURL,
+                                },
+                                socials: req.body.socials
                             });
 
                             newUser.save()
-                            .then(userresult => {
-                                newCreator.save()
-                                    .then(creatorresult => {
-                                        res.status(200).json({
-                                            userresult,
-                                            creatorresult
+                                .then(user => {
+                                    newCreator.save()
+                                        .then(creator => {
+                                            console.log('Creator: ' + creator + '\n' + 'User: ' + user);
+                                            res.status(200).json({
+                                                userId: user.userId,
+                                                category: user.registerAs.category,
+                                                categoryId: user.registerAs.categoryId,
+                                                username: user.username,
+                                                fullname: user.firstName + user.middleName + user.lastName,
+                                                email: user.email
+                                            });
+                                        })
+                                        .catch(err => {
+                                            res.status(500).json({ 
+                                                response: 'Creator Creation Failed!',
+                                                error: err.message
+                                            });
                                         });
-                                    })
-                                    .catch(err => {
-                                        console.log('Creator creation failed');
-                                        res.status(500).json({ error: err.message});
+                                })
+                                .catch(err => {
+                                    res.status(500).json({ 
+                                        response: "User Creation Failed!",
+                                        error: err.message
                                     });
-                            })
-                            .catch(err => {
-                                console.log('User creation failed');
-                                res.status(500).json({ error: err.message});
-                            });
+                                });
                             
                         }
                     });
 
                 //SPONSOR SIGNUP
-                } else if(req.body.registerAs.category === 'Sponsor') {
+                } else if(req.body.category === 'Sponsor') {
                     const newSponsorId = new mongoose.Types.ObjectId();
                     bcrypt.hash(req.body.password, Salt, (err, hash) => {
                         if(err) {
-                            return res.status(500).json({ error: err})
+                            res.status(500).json({ 
+                                message: "Hashing Failed",
+                                error: err.message
+                            });
                         } else {
                             const newUser = new User({
                                 userId: newUserId,
@@ -93,99 +102,62 @@ Router.post('/', (req, res, next) => {
                                 username: req.body.username,
                                 dob: req.body.dob,
                                 registerAs: { 
-                                    category: req.body.registerAs.category,
-                                    categoryId: newSponsorId
+                                    category: req.body.category,
+                                    categoryId: newCreatorId
                                 },
                                 password: hash
                             });
                             const newSponsor = new Sponsor({
                                 sponsorId: newSponsorId,
                                 userId: newUserId,
-                                username: req.body.username,
-                                image: null,
                                 bio: {
-                                    sponsorIn: req.body.bio.sponsorIn,
-                                    companyURL: req.body.bio.companyURL,
-                                    socials: req.body.bio.socials
-                                }
+                                    sponsorIn: req.body.sponsorIn,
+                                    companyURL: req.body.companyURL,
+                                },
+                                socials: req.body.socials
                             });
 
                             newUser.save()
-                            .then(userresult => {
+                            .then(user => {
                                 newSponsor.save()
-                                    .then(sponsorresult => {
+                                    .then(sponsor => {
+                                        console.log('Sponsor: ' + sponsor + '\n' + 'User: ' + user);
                                         res.status(200).json({
-                                            userresult,
-                                            sponsorresult
+                                            userId: user.userId,
+                                            category: user.registerAs.category,
+                                            categoryId: user.registerAs.categoryId,
+                                            username: user.username,
+                                            fullname: user.firstName + user.middleName + user.lastName,
+                                            email: user.email
                                         });
                                     })
                                     .catch(err => {
-                                        console.log('Sponsor creation failed');
-                                        res.status(500).json({ error: err.message});
+                                        res.status(500).json({ 
+                                            response: 'Sponsor Creation Failed!',
+                                            error: err.message
+                                        });
                                     });
                             })
                             .catch(err => {
-                                console.log('User creation failed');
-                                res.status(500).json({ error: err.message});
+                                res.status(500).json({ 
+                                    response: "User Creation Failed!",
+                                    error: err.message
+                                });
                             });
                         }
                     });
 
                 //FAN SIGNUP
                 } else {
-                    const newFanId = new mongoose.Types.ObjectId();
-                    bcrypt.hash(req.body.password, Salt, (err, hash) => {
-                        if(err) {
-                            return res.status(500).json({ error: err})
-                        } else {
-                            const newUser = new User({
-                                userId: newUserId,
-                                firstName: req.body.firstName,
-                                middleName: req.body.middleName,
-                                lastName: req.body.lastName,
-                                email: req.body.email,
-                                username: req.body.username,
-                                dob: req.body.dob,
-                                registerAs: { 
-                                    category: req.body.registerAs.category,
-                                    categoryId: newFanId
-                                },
-                                password: hash
-                            });
-                            const newFan = new Fan({
-                                fanId: newFanId,
-                                userId: newUserId,
-                                username: req.body.username,
-                                image: null
-                            });
-
-                            newUser.save()
-                                .then(userresult => {
-                                    newFan.save()
-                                        .then(fanresult => {
-                                            res.status(200).json({
-                                                userresult,
-                                                fanresult
-                                            });
-                                        })
-                                        .catch(err => {
-                                            console.log('Fan creation failed');
-                                            res.status(500).json({ error: err.message});
-                                        });
-                            })
-                            .catch(err => {
-                                console.log('User creation failed');
-                                res.status(500).json({ error: err.message});
-                            });
-                        }
+                    res.status(500).json({
+                        response: 'Invalid Category'
                     });
-
                 }
             }
         })
         .catch(error => {
             res.status(500).json({
-                message: 'Could not signup.',
+                message: 'Could Not Signup',
                 error: error.message
             });
         });

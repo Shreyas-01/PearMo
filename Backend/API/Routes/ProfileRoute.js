@@ -5,29 +5,26 @@ const bcrypt = require('bcrypt');
 
 const uploadingToAWS = require('../Middlewares/Upload');
 const User = require('../Models/UserSchema');
-const Creator = require('../Models/CreatorSchema');
-const Sponsor = require('../Models/SponsorSchema');
 
-Router.get('/:accountId', (req, res, next) => {
-    const userId = req.params.accountId;
+Router.get('/:userID', (req, res, next) => {
+    const userId = req.params.userID;
     User.findOne({ userId: userId})
         .then(user => {
             res.status(200).json({
                 accountDetails: user
             });
         })
-        .catch(err => {
+        .catch(error => {
             res.status(500).json({
                 response: "User not found",
-                message: err.message
+                error: error.message
             });
         });
 });
 
-Router.patch('/:accountId', uploadingToAWS, (req, res, next) => {
-    // userId, firstname, lastname, username, image, about, password, email
+Router.patch('/:userID', uploadingToAWS, (req, res, next) => {
     
-    const userId = req.params.accountId;
+    const userId = req.params.userID;
     const Salt = 10;
     
     bcrypt.hash(req.body.password, Salt, (err, hash) => {
@@ -43,55 +40,16 @@ Router.patch('/:accountId', uploadingToAWS, (req, res, next) => {
                 lastName: req.body.lastName,
                 email: req.body.email,
                 username: req.body.username,
-                image: req.file.location,
+                image: (typeof req.file === 'undefined') ? process.env.DEFAULT_AVATAR : req.file.location,
                 password: hash
             }, {
                 new: true
             })
             .then(user => {
-                
-                // user.registerAs.category
-                if(user.registerAs.category === 'Creator') {
-                    Creator.findOneAndUpdate({ creatorId: user.registerAs.categoryId}, {
-                            username: user.username,
-                            image: user.image
-                        }, {
-                            new: true
-                        })
-                        .then(creator => {
-                            res.status(200).json({
-                                response: "update successfull",
-                                creator: creator,
-                                user: user
-                            });
-                        }) 
-                        .catch(err => {
-                            res.status(500).json({
-                                response: "Unable to update creator",
-                                error: err.message
-                            });
-                        });
-                } else if (user.registerAs.category === 'Sponsor') {
-                    Sponsor.findOneAndUpdate({ sponsorId: user.registerAs.categoryId}, {
-                            username: user.username,
-                            image: user.image
-                        }, {
-                            new: true
-                        })
-                        .then(sponsor => {
-                            res.status(200).json({
-                                response: "update successfull",
-                                sponsor: sponsor,
-                                user: user
-                            });
-                        }) 
-                        .catch(err => {
-                            res.status(500).json({
-                                response: "Unable to update sponsor",
-                                error: err.message
-                            });
-                        });
-                }
+                res.status(201).json({
+                    response: 'User Detials Updated',
+                    user: user
+                });
             })
             .catch(err => {
                 res.status(500).json({

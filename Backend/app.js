@@ -9,24 +9,22 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // Import Routes
-const defaultRoute = require('./API/Routes/DefaultRoute');
 const signUpRoute = require('./API/Routes/SignUpRoute');
 const loginRoute = require('./API/Routes/LoginRoute');
 const creatorRoute = require('./API/Routes/CreatorsRoute');
 const sponsorRoute = require('./API/Routes/SponsorsRoute');
 const feedRoute = require('./API/Routes/FeedRoute');
 const postRoute = require('./API/Routes/PostRoute');
-const accountRoute = require('./API/Routes/AccountRoute');
 const profileRoute = require('./API/Routes/ProfileRoute');
-const likeRoute = require('./API/Routes/LikeRoute');
+const accountRoute = require('./API/Routes/AccountRoute');
 const commentRoute = require('./API/Routes/CommentRoute');
+const likeRoute = require('./API/Routes/LikeRoute');
+const userRoute = require('./API/Routes/UserRoute');
 
 // Middleware Import
 const requireAuth = require('./API/Middlewares/AuthenticationMiddleware');
 
-//wyhga
-//tpxdq
-mongoose.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@cluster0.wyhga.mongodb.net/${process.env.MONGO_DATABASE_NAME}?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@cluster0.tpxdq.mongodb.net/${process.env.MONGO_DATABASE_NAME}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).catch(err => {
@@ -62,7 +60,6 @@ app.use((req, res, next) => {
 });
 
 // Routes for request handling
-app.use('/', defaultRoute);
 app.use('/login', loginRoute);
 app.use('/signup', signUpRoute);
 app.use('/feed', requireAuth, feedRoute);
@@ -71,6 +68,7 @@ app.use('/creator', requireAuth, creatorRoute);
 app.use('/sponsor', requireAuth, sponsorRoute);
 app.use('/profile', requireAuth, profileRoute);
 app.use('/account', requireAuth, accountRoute);
+app.use('/user', requireAuth, userRoute);
 app.use('/like', requireAuth, likeRoute);
 app.use('/comment', requireAuth, commentRoute);
 

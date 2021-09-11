@@ -1,78 +1,64 @@
 const express = require('express');
 const Router = express.Router();
+const User = require('../Models/UserSchema');
 const Creator = require('../Models/CreatorSchema');
 const Sponsor = require('../Models/SponsorSchema');
-const Post = require('../Models/PostSchema');
 
-Router.get('/', (req, res ,next) => {
-    const categoryid = req.query.categoryid;
-    const category = req.query.category;
-
-    if(category === 'Creator'){
-        Creator.findOne({creatorId: categoryid})
-        .then(creator => {
-            Post.find({'postId': { $in: creator.posts }})
-                .then(posts => {
-                    console.log("Creator fetched successfully")
-                    console.log(posts);
-                    res.status(200).json({
-                        username: creator.username,
-                        image: creator.image,
-                        bio: creator.bio,
-                        posts: posts,
-                        numberofposts: creator.posts.length,
-                        numberoffollowing: creator.following.length,
-                        numberoffollowers: creator.followers.length,
+Router.get('/:accountId', (req, res ,next) => {
+    const userId = req.params.accountId;
+    User.findOne({ userId: userId})
+        .select(
+            'firstName middleName lastName email dob username image joinDate registerAs'
+        )
+        .then(user => {
+            if(user.registerAs.category === 'Creator') {
+                Creator.findOne({ creatorId: user.registerAs.categoryId})
+                    .select(
+                        'creatorId bio socials posts following followers'
+                    )
+                    .then(creator => {
+                        res.status(201).json({
+                            response: 'Done',
+                            user: user,
+                            category: creator
+                        });
                     })
-                })
-                .catch(error => {
-                    console.log("Failed to fetch creators posts")
-                    res.status(401).json({
-                        message: 'Failed to fetch creators posts',
-                        error: error.message
-                    });
-                })
+                    .catch(error => {
+                        res.status(400).json({
+                            response: 'Failed to fetch',
+                            error: error.message
+                        });
+                    })
+            } else if (user.registerAs.category === 'Sponsor') {
+                Sponsor.findOne({ sponsorId: user.registerAs.categoryId})
+                    .select(
+                        'sponsorId bio socials posts following followers'
+                    )
+                    .then(sponsor => {
+                        res.status(201).json({
+                            response: 'Done',
+                            user: user,
+                            category: sponsor
+                        });
+                    })
+                    .catch(error => {
+                        res.status(400).json({
+                            response: 'Failed to fetch',
+                            error: error.message
+                        });
+                    })
+            } else {
+                res.status(500).json({
+                    response: 'Invalid User Type'
+                });
+            }
         })
         .catch(error => {
-            console.log("Failed to fetch creator")
-            res.status(401).json({
-                message: 'Failed to fetch creator',
+            res.status(400).json({
+                response: 'Account Not Found',
                 error: error.message
             });
         });
-    } else {
-        Sponsor.findOne({sponsorId: categoryid})
-        .then(sponsor => {
-            Post.find({'postId': { $in: sponsor.posts }})
-                .then(posts => {
-                    console.log("Sponsor fetched successfully")
-                    console.log(posts);
-                    res.status(200).json({
-                        username: sponsor.username,
-                        image: sponsor.image,
-                        bio: sponsor.bio,
-                        posts: posts,
-                        numberofposts: sponsor.posts.length,
-                        numberoffollowing: sponsor.following.length,
-                        numberoffollowers: sponsor.followers.length,
-                    })
-                })
-                .catch(error => {
-                    console.log("Failed to fetch sponsor posts")
-                    res.status(401).json({
-                        message: 'Failed to fetch sponsor posts',
-                        error: error.message
-                    });
-                })
-        })
-        .catch(error => {
-            console.log("Failed to fetch sponsor")
-            res.status(401).json({
-                message: 'Failed to fetch sponsor',
-                error: error.message
-            });
-        });
-    }
 });
 
 module.exports = Router;

@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
 const LikeSchema = mongoose.Schema({
-    userCategory: { type: String},
     likeId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'} 
 });
 
 const CommentSchema = mongoose.Schema({
-    senderName: { type: String, required: true},
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     text: { type: String},
     date: { type: Date, default: Date.now}
 });
@@ -16,14 +15,9 @@ const PostSchema = mongoose.Schema({
     date: { type: Date, default: Date.now},
     title: { type: String, required: true},
     description: { type: String, required: false},
-    text: {type:String, required: true},
+    text: { type: String, required: true},
     image: { type: String, required: false},
-    accountData: {
-        accountCategory: { type: String},
-        accountImage: { type: String},
-        accountId: { type: mongoose.Schema.Types.ObjectId, refPath: 'accountData.category'},
-        accountName: { type: String}
-    },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     likes: [LikeSchema],
     numberOfLikes: { type: Number, default: 0},
     comments: [CommentSchema],

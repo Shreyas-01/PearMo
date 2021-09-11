@@ -46,6 +46,10 @@ const upload = multer({
 const uploadSingle = upload.single('image');
 
 const uploadingToAWS = (req, res, next) => {
+    
+    console.log('Request Body: ' + req.body);
+    console.log('Request File: ' + req.file);
+    
     uploadSingle(req, res, err => {
         if(err) {
             res.status(500).json({
@@ -53,7 +57,7 @@ const uploadingToAWS = (req, res, next) => {
                 message: err.message
             });
         }
-        // console.log("file object: " + req.file);
+        console.log("file object: " + req.file);
         next();
     });
 }
