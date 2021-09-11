@@ -3,15 +3,13 @@ const Router = express.Router();
 
 const Sponsor = require('../Models/SponsorSchema');
 
-// ensure authentication as well
 Router.get('/', (req, res, next) => {
     Sponsor.aggregate([
             { 
                 $project:{ 
                     _id: 0,
+                    userId: 1,
                     sponsorId: 1,
-                    username: 1,
-                    image: 1,
                     numberOfFollowers: { 
                         $cond: { 
                             if: { $isArray: "$followers" }, 
@@ -30,13 +28,14 @@ Router.get('/', (req, res, next) => {
             }
         ])
         .then(sponsors => {
-            console.log(sponsors);
-            res.status(200).json(sponsors);
+            res.status(200).json(
+                sponsors
+            );
         })
         .catch(error => {
             console.log(error);
             res.status(500).json({
-                message: "unable to fetch sponsors",
+                message: "Unable to fetch sponsors",
                 error: error.message
             });
         });

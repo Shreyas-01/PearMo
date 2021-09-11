@@ -9,7 +9,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // Import Routes
-const defaultRoute = require('./API/Routes/DefaultRoute');
 const signUpRoute = require('./API/Routes/SignUpRoute');
 const loginRoute = require('./API/Routes/LoginRoute');
 const creatorRoute = require('./API/Routes/CreatorsRoute');
@@ -17,6 +16,10 @@ const sponsorRoute = require('./API/Routes/SponsorsRoute');
 const feedRoute = require('./API/Routes/FeedRoute');
 const postRoute = require('./API/Routes/PostRoute');
 const profileRoute = require('./API/Routes/ProfileRoute');
+const accountRoute = require('./API/Routes/AccountRoute');
+const commentRoute = require('./API/Routes/CommentRoute');
+const likeRoute = require('./API/Routes/LikeRoute');
+const userRoute = require('./API/Routes/UserRoute');
 
 // Middleware Import
 const requireAuth = require('./API/Middlewares/AuthenticationMiddleware');
@@ -57,7 +60,6 @@ app.use((req, res, next) => {
 });
 
 // Routes for request handling
-app.use('/', defaultRoute);
 app.use('/login', loginRoute);
 app.use('/signup', signUpRoute);
 app.use('/feed', requireAuth, feedRoute);
@@ -65,6 +67,10 @@ app.use('/post', requireAuth, postRoute);
 app.use('/creator', requireAuth, creatorRoute);
 app.use('/sponsor', requireAuth, sponsorRoute);
 app.use('/profile', requireAuth, profileRoute);
+app.use('/account', requireAuth, accountRoute);
+app.use('/user', requireAuth, userRoute);
+app.use('/like', requireAuth, likeRoute);
+app.use('/comment', requireAuth, commentRoute);
 
 // Error handling
 app.use((req, res, next) => {

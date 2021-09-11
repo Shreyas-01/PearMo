@@ -7,57 +7,53 @@ const bcrypt = require('bcrypt');
 Router.post('/', (req, res ,next) => {
 
     User.findOne({email: req.body.email})
-        .then(userexists => {
-            if(userexists === null){
-                console.log('No user with this email exists');
+        .then(user => {
+            if(user === null){
                 res.status(401).json({
-                    message: 'No user with this email exists',
+                    message: 'Account Does Not Exist',
                 });
             } else {
-                bcrypt.compare(req.body.password, userexists.password)
+                bcrypt.compare(req.body.password, user.password)
                     .then((result) => {
                         if(result === false){
-                            console.log("Entered password is incorrect.");
                             res.status(401).json({
-                                message: 'Entered password is incorrect.',
+                                message: 'Incorrect Password',
                             });
                         } else {
-                            const age = 1000 * 60 * 60 * 4; // 4 hours
+                            const age = parseInt(process.env.TOKEN_AGE); // 4 hours
                             const email = req.body.email;
                             const token = jwt.sign({
-                                email
-                            },
-                            process.env.JWTTOKEN, { 
-                                expiresIn: age
-                            });
+                                                    email
+                                                },
+                                                process.env.JWTTOKEN, { 
+                                                    expiresIn: age
+                                            });
                             res.cookie('jwt', token, { 
-                                httpOnly: true, 
-                                maxAge: age 
-                            });
-                            console.log("Login successful.");
+                                    httpOnly: true, 
+                                    maxAge: age 
+                                });
                             res.status(200).json({
-                                message: 'Login successful',
-                                userId:userexists.userId,
-                                category: userexists.registerAs.category,
-                                categoryId: userexists.registerAs.categoryId,
-                                username: userexists.username,
-                                email: userexists.email
+                                message: 'Login Successful',
+                                userId: user.userId,
+                                category: user.registerAs.category,
+                                categoryId: user.registerAs.categoryId,
+                                username: user.username,
+                                fullname: user.firstName + user.middleName + user.lastName,
+                                email: user.email
                             });  
                         }
                     })
                     .catch(error => {
-                        console.log("tokene generation failed")
                         res.status(401).json({
-                            message: 'token generation failed',
+                            message: 'Token Generation Failed',
                             error: error.message
                         });
                     });
             }
         })
         .catch(error => {
-            console.log("Could not login.")
             res.status(401).json({
-                message: 'Could not login.',
+                message: 'Could Not Login',
                 error: error.message
             });
         });
