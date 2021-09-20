@@ -1,3 +1,4 @@
+import './Feed.css';
 import React from 'react';
 
 const Feed = () => {

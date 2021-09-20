@@ -1,4 +1,5 @@
 import './Sponsors.css';
+import React from 'react';
 
 const Sponsors = () => {
     return (

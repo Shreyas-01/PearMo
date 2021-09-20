@@ -39,7 +39,8 @@ Router.post('/', (req, res ,next) => {
                                 categoryId: user.registerAs.categoryId,
                                 username: user.username,
                                 fullname: user.firstName + user.middleName + user.lastName,
-                                email: user.email
+                                email: user.email,
+                                image: user.image
                             });  
                         }
                     })
