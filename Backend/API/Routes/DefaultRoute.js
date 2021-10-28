@@ -12,7 +12,7 @@ Router.post('/', (req, res, next) => {
         id: req.body.id
     };
     res.status(200).json({
-        messsage: "Object Created and Express Body parser working correctly.",
+        message: "Object Created and Express Body parser working correctly.",
         objectCreated: obj
     });
 })

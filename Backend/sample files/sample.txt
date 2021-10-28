@@ -1,30 +1,26 @@
 // sponsor 
 {
-    "firstName": "Akshat",
-    "lastName": "Aggarwal",
-    "email": "akshataggarwal@gmail.com",
+    "firstName": "sponsor",
+    "lastName": "b",
+    "email": "sponsorb@gmail.com",
     "dob": "2001-6-15",
-    "registerAs": {
-        "category": "Sponsor"
-    },
-    "password": "akshat012",
-    "username": "aggarwal_012",
-    "bio": {
-        "sponsorIn": "education",
-        "companyURL": "https://www.youtube.com/watch?v=eTaWFhPXPz4",
-        "socials" : []
-    }
+    "category": "Sponsor",
+    "password": "sponsorb",
+    "username": "sponsorb",
+    "sponsorIn": "education",
+    "companyURL": "https://www.youtube.com/watch?v=eTaWFhPXPz4",
+    "socials" : []
 }
 
 // creator
 {
-    "firstName": "garvit",
-    "lastName": "singh",
-    "email": "garvitsingh@gmail.com",
+    "firstName": "creator",
+    "lastName": "a",
+    "email": "creatora@gmail.com",
     "dob": "2001-6-15",
     "category": "Creator",
-    "password": "garvit003",
-    "username": "garvit_003",
+    "password": "creatora",
+    "username": "creatora",
     "createIn": "education",
     "channelURL": "https://www.youtube.com/watch?v=eTaWFhPXPz4",
     "socials" : []
@@ -50,12 +46,13 @@
 
 // posts
 {
-        "title": "testing title",
-        "description": "testing description",
-        "text": "testing text",
-        "image": null,
-        "accountCategory": "Creator",
-        "accountImage": null,
-        "accountId": "61336ee10f15859287ee9aaf",
-        "accountName": "garvit_003"
+    "title": "postatitle",
+    "description": "postadesc",
+    "text": "postatext",
+    "image": null,
+    "category": "Creator",
+    "accountImage": null,
+    "categoryId": "614a1aa4b1003d18fc2729a4",
+    "accountName": "creatora",
+    "userId": "614a1aa4b1003d18fc2729a3"
 }

@@ -40,7 +40,7 @@ Router.post('/', uploadingToAWS, (req, res, next) => {  // middleware as upload.
 
     newPost.save()
         .then(post => {
-            console.log('Post Created Successfully: \n' + post);
+            console.log('Post Created Successfully: \n');
             if(req.body.category === 'Creator') {
                 Creator.findOne({ creatorId: req.body.categoryId})
                     .then(creator => {

@@ -32,7 +32,7 @@ Router.post('/', (req, res ,next) => {
                                     httpOnly: true, 
                                     maxAge: age 
                                 });
-                            res.status(200).json({
+                            res.status(200).json({user: {
                                 message: 'Login Successful',
                                 userId: user.userId,
                                 category: user.registerAs.category,
@@ -40,8 +40,9 @@ Router.post('/', (req, res ,next) => {
                                 username: user.username,
                                 fullname: user.firstName + user.middleName + user.lastName,
                                 email: user.email,
-                                image: user.image
-                            });  
+                                image: user.image,
+                                about: user.about
+                            }});  
                         }
                     })
                     .catch(error => {

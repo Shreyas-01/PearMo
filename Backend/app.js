@@ -3,6 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // .env file configure
 const dotenv = require('dotenv');
@@ -24,7 +25,7 @@ const userRoute = require('./API/Routes/UserRoute');
 // Middleware Import
 const requireAuth = require('./API/Middlewares/AuthenticationMiddleware');
 
-mongoose.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@cluster0.tpxdq.mongodb.net/${process.env.MONGO_DATABASE_NAME}?retryWrites=true&w=majority`, {
+mongoose.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@cluster0.wyhga.mongodb.net/${process.env.MONGO_DATABASE_NAME}?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).catch(err => {
@@ -46,6 +47,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // CORS allow
+app.use(cors());
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', process.env.DOMAIN_ORIGIN);
     res.header(

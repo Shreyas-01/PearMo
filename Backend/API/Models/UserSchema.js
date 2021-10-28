@@ -14,6 +14,7 @@ const UserSchema = mongoose.Schema({
         category: { type: String, required: true},
         categoryId: { type: mongoose.Schema.Types.ObjectId, refPath: 'registerAs.catergory', required: true}
     },
+    about: {type : String, required: false},
     password: { type: String, required: true}
 });
 

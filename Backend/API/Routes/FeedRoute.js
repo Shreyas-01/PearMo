@@ -29,7 +29,8 @@ Router.get('/trending', (req,res,next) => {
             let random = Math.floor(Math.random() * count);
 
             try{
-                res.status(401).json({
+                console.log("Trending post fetched successfully.")
+                res.status(200).json({
                     post: posts[random]
                 });
             } catch (error) { 
@@ -56,7 +57,7 @@ Router.get('/recent/:loadmore', (req,res,next) => {
         .skip(nextposts)
         .limit(parseInt(process.env.POST_LIMIT))
         .then(posts => {
-            console.log("Posts fetched successfully")
+            console.log("Recent posts fetched successfully")
             res.status(201).json({
                 posts
             });

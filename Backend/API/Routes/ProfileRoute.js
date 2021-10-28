@@ -1,7 +1,8 @@
-  
 const express = require('express');
 const Router = express.Router();
 const bcrypt = require('bcrypt');
+const Creator = require('../Models/CreatorSchema');
+const Sponsor = require('../Models/SponsorSchema');
 
 const uploadingToAWS = require('../Middlewares/Upload');
 const User = require('../Models/UserSchema');
@@ -10,9 +11,42 @@ Router.get('/:userID', (req, res, next) => {
     const userId = req.params.userID;
     User.findOne({ userId: userId})
         .then(user => {
-            res.status(200).json({
-                accountDetails: user
-            });
+            if(user.registerAs.category === 'Creator') {
+                Creator.findOne({ creatorId : user.registerAs.categoryId})
+                    .then(creator => {
+                        res.status(201).json({
+                            user: user,
+                            category: creator
+                        });
+                    })
+                    .catch(error => {
+                        res.status(500).json({
+                            response: "Could not fetch Profile",
+                            error: error.message
+                        });
+                    });
+            }
+            else if(user.registerAs.category === 'Sponsor') {
+                Sponsor.findOne({ sponsorId : user.registerAs.categoryId})
+                .then(sponsor => {
+                    res.status(201).json({
+                        user: user,
+                        category: sponsor
+                    });
+                })
+                .catch(error => {
+                    res.status(500).json({
+                        response: "Could not fetch Profile",
+                        error: error.message
+                    });
+                });
+            }
+            else {
+                res.status(500).json({
+                    response: "Invalid Category",
+                    error: error.message
+                });
+            }
         })
         .catch(error => {
             res.status(500).json({
@@ -40,6 +74,7 @@ Router.patch('/:userID', uploadingToAWS, (req, res, next) => {
                 lastName: req.body.lastName,
                 email: req.body.email,
                 username: req.body.username,
+                about: req.body.about,
                 image: (typeof req.file === 'undefined') ? process.env.DEFAULT_AVATAR : req.file.location,
                 password: hash
             }, {

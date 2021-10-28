@@ -1,0 +1,16 @@
+.footer {
+    background-color: #EAECEE;
+    margin: 0;
+    padding: 15px 0 15px 0;
+    overflow: hidden;
+    text-align: center;
+}
+
+.footer .list {
+    padding: 0;
+    font-size: 12px;
+}
+
+.text-dark select{
+    width: 200px;
+}

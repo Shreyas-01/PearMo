@@ -10,6 +10,7 @@ Router.get('/', (req, res, next) => {
                     _id: 0,
                     userId: 1,
                     sponsorId: 1,
+                    bio: 1,
                     numberOfFollowers: { 
                         $cond: { 
                             if: { $isArray: "$followers" }, 
@@ -28,9 +29,9 @@ Router.get('/', (req, res, next) => {
             }
         ])
         .then(sponsors => {
-            res.status(200).json(
+            res.status(200).json({
                 sponsors
-            );
+            });
         })
         .catch(error => {
             console.log(error);

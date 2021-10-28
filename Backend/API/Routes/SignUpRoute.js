@@ -103,7 +103,7 @@ Router.post('/', (req, res, next) => {
                                 dob: req.body.dob,
                                 registerAs: { 
                                     category: req.body.category,
-                                    categoryId: newCreatorId
+                                    categoryId: newSponsorId
                                 },
                                 password: hash
                             });
@@ -111,8 +111,8 @@ Router.post('/', (req, res, next) => {
                                 sponsorId: newSponsorId,
                                 userId: newUserId,
                                 bio: {
-                                    sponsorIn: req.body.sponsorIn,
-                                    companyURL: req.body.companyURL,
+                                    sponsorIn: req.body.createIn,
+                                    companyURL: req.body.channelURL,
                                 },
                                 socials: req.body.socials
                             });
