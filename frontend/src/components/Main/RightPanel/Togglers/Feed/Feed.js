@@ -15,7 +15,6 @@ const Feed = () => {
     } else {
         return (
             <div className="feed">
-            <p>Feed</p>
             <NewPost />
             <Posts />
             </div>

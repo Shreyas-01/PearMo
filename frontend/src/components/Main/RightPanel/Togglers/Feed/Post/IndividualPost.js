@@ -10,6 +10,7 @@ const IndividualPost = ({post}) => {
         <div className="feed-post">
             <AccountInfo post={post}/>
             <Content post={post} />
+            <hr/>
             <LikeSection />
             <CommentInfo post={post} />
         </div>

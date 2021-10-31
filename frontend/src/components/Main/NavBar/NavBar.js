@@ -10,13 +10,8 @@ const NavBar = () => {
 
     return (
         <div className="container-fluid navbar">
-            {/* <div className="search-space col-6">
-                <input type="search" placeholder="Search PearMo"></input>
-                <button className="fas fa-search"></button>
-            </div> */}
-            
-            <div className="navbar-logo col-8" onClick={() => history.push('/')}>
-                <img alt="unavailable" src="/Wpearmo.png"></img>
+            <div className="navbar-logo col-8">
+                <img alt="unavailable" src="/Wpearmo.png" onClick={() => history.push('/')}></img>
             </div>
 
             <div className="navbar-items col-2">
@@ -31,6 +26,17 @@ const NavBar = () => {
                 </div>
                 <div className="profile-image">
                     <img alt="unavailable" src="https://drive.google.com/uc?export=view&id=1DVhHrkvFLWg88X2HLF7_NdbDzeJs0C3E" />
+                </div>
+
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <i class="fa fa-caret-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
                 </div>
             </div>
         </div>

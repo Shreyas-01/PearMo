@@ -1,18 +1,26 @@
+.comment-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .comment-info img {
-    width: 20px;
-    height: 20px;
+    width: 50%;
     border-radius: 50%;
 }
 
-.comment-input {
+.comment-info input{
+    height: 2rem;
+}
+
+.new-comment{
     width: 100%;
     border-radius: 15px;
     padding: 0px 15px;
     outline: none;
+    border: 1px solid #707070;
 }
 
-button {
-    outline: none;
-    border: none;
-    background-color: #fff;
+.comment-info i{
+    cursor: pointer;
 }

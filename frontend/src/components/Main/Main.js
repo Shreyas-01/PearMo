@@ -8,7 +8,7 @@ import RightPanel from './RightPanel/RightPanel';
 
 const Main = () => {
     return (
-        <div className="main">
+        <div className="main-page">
             <NavBar />
             <div className="container-fluid">
                 <div className="row">

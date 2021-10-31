@@ -1,0 +1,8 @@
+.like-section{
+    margin: 5px 0 15px 0;
+}
+
+.like-section i{
+    margin: 0 10px 0 10px;
+    cursor: pointer;
+}

@@ -2,5 +2,9 @@
     height: auto;
     width: 100%;
     background: #fff;
-    border-radius: 20px;
+    border-radius: 10px;
+    margin: 50px 0 80px 0;
+    padding: 20px;
+    box-shadow: 3px 6px 20px #00000029;
+    opacity: 1;
 }

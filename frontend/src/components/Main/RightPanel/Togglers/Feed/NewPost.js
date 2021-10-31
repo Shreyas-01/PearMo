@@ -34,43 +34,38 @@ const NewPost = () => {
     };
 
     return (
-        <div className="post">
-            <form className="postForm" onSubmit={handleSubmit}>
-                <div className="writeFormGroup">
-                    <input
+        <div className="new-post">
+            
+            <div className="new-post-content">
+                <div className="profile-image col-2">
+                    <img  alt="unavailable" src="https://drive.google.com/uc?export=view&id=1DVhHrkvFLWg88X2HLF7_NdbDzeJs0C3E" />
+                </div>
+
+                <div className="new-post-content col-9">
+                    <textarea
                         type="text"
-                        placeholder="Title"
-                        className="writeInput"
+                        placeholder="Write something here..."
+                        className="write-content"
                         autoFocus={true}
                         onChange={e=>setTitle(e.target.value)}
                     />
-                    <input
+                </div>
+                <div className="new-post-submit">
+                    <i class="far fa-paper-plane fa-lg"></i>
+                </div>
+            </div>
+
+            <div className="new-post-footer">
+                    <button className="btnn">Looking for Collaboration/Sponsor</button>
+                    <button className="btnn">Add Photos/Videos</button>
+
+                    {/* <input
                         type="file"
                         id="fileInput"
                         style={{ display: "none" }}
                         onChange={(e) => setImage(e.target.files[0])}
-                    />
-                </div>
-
-                <div className="postFormGroup">
-                    <textarea
-                        placeholder="Description"
-                        type="text"
-                        className="postDesc"
-                        onChange={e=>setDesc(e.target.value)}
-                    ></textarea>
-                </div>
-                <div>
-                    <textarea
-                        placeholder="Text"
-                        type="text"
-                        className="postText"
-                        onChange={e=>setText(e.target.value)}
-                    ></textarea>
-                </div>
-                
-                <button className="submitPost" type="submit">Publish</button>
-            </form>
+                    /> */}
+            </div>
         </div>
     );
 };

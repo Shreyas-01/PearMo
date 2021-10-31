@@ -21,23 +21,31 @@ const AccountInfo = ({post}) => {
             });
     }, [])
 
+
     if(user !== undefined && category !== undefined) {
         return (
             <div className="user-info">
-                <img alt="unavailable" className="col-sm-2" src="/pexels-masha-raymers-2726110.jpg"></img>
+                <div className="">
+                    <img alt="unavailable" src="https://drive.google.com/uc?export=view&id=1DVhHrkvFLWg88X2HLF7_NdbDzeJs0C3E" />
+                </div>
+                
                 <div className="user-data col-sm-7">
                     <a href={`/account/${post.userId}`}><p className="user-name">{user.firstName}</p></a>
-                    
                     <p className="user-username">@{user.username}</p>
                     <p className="post-time">{post.date}</p>
                 </div>
-                <div onClick={() => setFollow(!follow)} className="btn btn-outline-primary follow-button col-sm-3">
+
+                <div onClick={() => setFollow(!follow)} className="btn btn-outline-primary follow-button col-md-2 col-sm-3">
                     {follow ? "  Following" : "  Follow"}
                 </div>
             </div>
         )
-    } else{
-        return (<div></div>)
+    } 
+    
+    else{
+        return (
+            <div></div>
+        );
     }
 };
 

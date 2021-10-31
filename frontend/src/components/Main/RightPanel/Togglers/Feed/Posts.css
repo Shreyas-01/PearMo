@@ -1,0 +1,22 @@
+.trendingpost-title, .recentposts-title{
+    display: flex;
+    justify-content: row;
+    align-items: center;
+    margin: 70px 0 50px 0;
+}
+.trendingpost-title hr, .recentposts-title hr{
+    margin: auto;
+}
+
+.trendingpost-title p, .recentposts-title p{
+    color: #0275B1;
+    font-size: 80%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.trendingpost-title span, .recentposts-title span{
+    font-weight: bold;
+    color: black;
+}
