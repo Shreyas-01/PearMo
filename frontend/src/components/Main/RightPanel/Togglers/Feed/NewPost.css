@@ -1,7 +1,7 @@
 .new-post{
     border-radius: 10px;
     background-color: #F1F9FF;
-    box-shadow: 3px 6px 20px #00000029;
+    box-shadow: 0 0 5px #00000029;
     border: 1px solid #CCCCCC;
     opacity: 1;
     height: fit-content;
@@ -41,10 +41,12 @@
 .new-post-content .new-post-content textarea{
     height: 100%;
     width: 100%;
+    min-height: 30px;
     border-radius: 15px;
     outline: 0;
     padding: 5px 15px;
     border-style: none;
+    resize: y;
 }
 
 .new-post-footer{

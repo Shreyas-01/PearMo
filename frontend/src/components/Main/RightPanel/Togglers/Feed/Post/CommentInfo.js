@@ -12,7 +12,7 @@ const CommentInfo = ({post}) => {
                     </div>
 
                     <div className="col-10">
-                        <input type="text" name="comment" className="new-comment" placeholder="Add a comment..." />
+                        <input type="text" name="comment" className="new-comment" placeholder="Comment..." />
                     </div>
                     
                     <div className="col-1">

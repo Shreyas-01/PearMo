@@ -47,6 +47,7 @@ const NewPost = () => {
                         placeholder="Write something here..."
                         className="write-content"
                         autoFocus={true}
+                        maxLength="600"
                         onChange={e=>setTitle(e.target.value)}
                     />
                 </div>

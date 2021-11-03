@@ -39,28 +39,61 @@ const Posts = () => {
     const updateLoadMore = () => {setLoadMore(loadMore => loadMore+1)};
 
 
+    const toggletrending = (e) => {
+        var x = document.getElementById("trendingpost-cont");
+
+        if(e.target.className === "fas fa-arrow-down fa-sm") {
+            e.target.className = "fas fa-arrow-right fa-sm";
+            x.style.display = "none";
+        }
+        else {
+            e.target.className = "fas fa-arrow-down fa-sm";
+            x.style.display = "block";
+        }
+    };
+
+    const togglerecent = (e) => {
+        var x = document.getElementById("recentposts-cont");
+
+        if(e.target.className === "fas fa-arrow-down fa-sm") {
+            e.target.className = "fas fa-arrow-right fa-sm";
+            x.style.display = "none";
+        }
+        else {
+            e.target.className = "fas fa-arrow-down fa-sm";
+            x.style.display = "block";
+        }
+    };
+
     if(trendingPost !== undefined && recentPost !== undefined) {
         return (
             <div className="post">
                 <div className="trendingpost">
                     <div className="trendingpost-title row">
                         <hr className="col-5"/>
-                        <p className="col-2"> <span>SORT BY:</span> TRENDING</p>
+                        <p className="col-2"> <span>SORT BY:</span> TRENDING <i class="fas fa-arrow-down fa-sm" onClick={(e) => toggletrending(e)}></i></p>
                         <hr className="col-5"/>
                     </div>
-                    <RenderPost post={trendingPost} key={trendingPost._id}/>
+
+                    <div id="trendingpost-cont">
+                        <RenderPost post={trendingPost} key={trendingPost._id}/>
+                    </div>
                 </div>
 
-                <div className="recentposts">
+                <div id="recentposts">
                     <div className="recentposts-title row">
                         <hr className="col-5"/>
-                        <p className="col-2"> <span>SORT BY:</span> RECENT</p>
+                        <p className="col-2"> <span>SORT BY:</span> RECENT <i class="fas fa-arrow-down fa-sm" onClick={(e) => togglerecent(e)}></i></p>
                         <hr className="col-5"/>
                     </div>
 
-                    {recentPost.map((post) => <RenderPost post={post} key={post._id}/>)}
+                    <div id="recentposts-cont">
+                        {recentPost.map((post) => <RenderPost post={post} key={post._id}/>)}
+                    </div>
+                </div>
 
-                    <button onClick={updateLoadMore}>Load More Posts</button>
+                <div className="loadmore">
+                    <button className="loadmore-btn" type="button" onClick={updateLoadMore}>Load More Posts</button>
                 </div>
             </div>
         )

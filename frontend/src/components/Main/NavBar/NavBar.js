@@ -27,17 +27,6 @@ const NavBar = () => {
                 <div className="profile-image">
                     <img alt="unavailable" src="https://drive.google.com/uc?export=view&id=1DVhHrkvFLWg88X2HLF7_NdbDzeJs0C3E" />
                 </div>
-
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        <i class="fa fa-caret-down"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>
-                    </div>
-                </div>
             </div>
         </div>
     );

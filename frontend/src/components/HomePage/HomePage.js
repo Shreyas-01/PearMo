@@ -14,8 +14,8 @@ const HomePage = () => {
                 </div>
 
                 <div className="links">
-                    <button type="button" className="btn joinus-button"><Link to="/joinus">Join us</Link></button>
-                    <button type="button" className="btn login-button"><Link to="/login">Login</Link></button>
+                    <button type="button" className="joinus-button"><Link to="/joinus">Join us</Link></button>
+                    <button type="button" className="login-button"><Link to="/login">Login</Link></button>
                 </div>
             </div>
 

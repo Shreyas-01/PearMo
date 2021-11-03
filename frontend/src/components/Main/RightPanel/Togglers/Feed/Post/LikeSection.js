@@ -10,9 +10,8 @@ const LikeSection = ({post}) => {
     }
     return (
         <div className="container like-section">
-            <i className="far fa-thumbs-up" onClick={(e) => updateLike(e)}> Like</i>
-            <i className="far fa-comment"> Comment</i>
-            <i className="far fa-share-square"> Share</i>
+            <i className="far fa-thumbs-up" onClick={(e) => updateLike(e)}><span> Like</span></i>
+            <i className="far fa-share-square"><span> Share</span></i>
         </div>
     );
 };

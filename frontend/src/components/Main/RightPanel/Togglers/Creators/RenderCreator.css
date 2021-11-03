@@ -1,0 +1,57 @@
+.ind-creator{
+    height: fit-content;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #00000029;
+    border: 1px solid #CCCCCC;
+    padding: 12px 0 12px 0;
+    margin: 0 0 40px 0;
+}
+
+
+.creators{
+    padding-top: 35px;
+}
+
+.creator-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.creator-fullname {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.creates-in {
+    font-size: 9px;
+}
+
+.followers {
+    font-size: 9px;
+}
+
+.creator-bio {
+    font-size: 9px;
+}
+
+.adding {
+    padding: 10px 0px;
+}
+
+.adding-button {
+    background-color: #ACACAC;
+    padding: 2px 5px 2px 5px;
+    font-size: 12px;
+    border-radius: 5px;
+    color: white;
+    border: none;
+}
+
+.add-blue{
+    background-color: #2699FB !important;
+}
+
+.first, .second {
+    border-right: 2px solid #2699FB;
+}
